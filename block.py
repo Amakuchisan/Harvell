@@ -12,7 +12,7 @@ class Block:
         if (
             x <= self.pos.x+16
             and x >= self.pos.x-8
-            and y == self.pos.y-7
+            and y == self.pos.y-11
         ):
             y = self.pos.y
         else:
