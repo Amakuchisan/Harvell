@@ -5,9 +5,11 @@ class Vec2:
 
 class Player:
     def __init__(self, img_id):
-        self.pos = Vec2(0, 100)
+        self.pos = Vec2(0, 105)
         self.img_player = img_id
 
-    def update(self, x, y):
+    def update(self, x):
         self.pos.x += x
-        self.pos.y += 0
+
+    def jump(self, y):
+        self.pos.y -= y
