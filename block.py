@@ -5,7 +5,7 @@ class Vec2:
 
 class Block:
     def __init__(self, img_id):
-        self.pos = Vec2(60, 80)
+        self.pos = Vec2(60, 90)
         self.img_player = img_id
 
     def update_floor(self, x, y):
