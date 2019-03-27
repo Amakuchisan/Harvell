@@ -6,7 +6,7 @@ class Vec2:
 class Item:
     def __init__(self):
         img_id = 0
-        self.img_player = img_id
+        self.img_item = img_id
         self.col = 0 # red
 
     def update(self, x, y, color):

@@ -11,7 +11,7 @@ class Enemy:
         self.ENEMY_H = 11
         self.col = 9
         self.pos = Vec2(50, 101)
-        self.img_player = img_id
+        self.img_enemy = img_id
 
     def update(self, x):
         self.pos.x += 1

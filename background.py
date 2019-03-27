@@ -3,10 +3,10 @@ class Vec2:
         self.x = x
         self.y = y
 
-class Block:
+class Background:
     def __init__(self, img_id):
-        self.pos = Vec2(60, 90)
-        self.img_block = img_id
+        self.pos = Vec2(0, 0)
+        self.img_background = img_id
 
     def update_floor(self, x, y):
         if (

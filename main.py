@@ -3,6 +3,7 @@ import player
 import enemy
 import block
 import item
+import background
 
 WINDOW_H = 120
 WINDOW_W = 160
@@ -11,6 +12,8 @@ PLAYER_pos_y = 5
 # PLAYER_W = 9
 BLOCK_H = 8
 BLOCK_W = 16
+
+GROUND_BLOCK = 64
 
 #COLOR
 RED = 8
@@ -21,8 +24,9 @@ class App:
         self.IMG_BLOCK = 0
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
+        self.IMG_BACKGROUND = 0
 
-        self.time = 0
+        self.count = 0
 
         pyxel.init(WINDOW_W, WINDOW_H, caption="Harvell")
         pyxel.load("assets/my_resource.pyxel")
@@ -30,11 +34,12 @@ class App:
         self.mplayer = player.Player(self.IMG_PLAYER)
         self.menemy = enemy.Enemy(self.IMG_ENEMY)
         self.block = block.Block(self.IMG_BLOCK)
+        self.background = background.Background(self.IMG_BACKGROUND)
         self.Items = []
         # add item
-        new_item = item.Red()
-        new_item.update(36, 100, RED)
-        self.Items.append(new_item)
+        self.new_item = item.Red()
+        self.new_item.update(36, 100, RED)
+        self.Items.append(self.new_item)
 
         pyxel.run(self.update, self.draw)
 
@@ -44,13 +49,19 @@ class App:
         # self.Items = []
         if pyxel.frame_count%5 == 0:
             self.menemy.update(self.menemy.pos.x)
-        #     if len(self.Items)!=0:
-        #         new_item = item.RED()
-        #         new_item.update(36, 100, RED)
-        #         self.Items.append(new_item)
+        if pyxel.frame_count%100 == 0:
+            if len(self.Items) == 0:
+                self.Items.append(self.new_item)
 
         if pyxel.btnp(pyxel.KEY_Q):
-            pyxel.quit()
+            print(int(self.mplayer.pos.x/10), int((self.mplayer.pos.y+40)/10))
+            # print(pyxel.image(0).get(self.mplayer.pos.x, self.mplayer.pos.y))
+            # print(pyxel.tilemap(0).get(4, 10))
+            # print(pyxel.tilemap(0).get(4, 11))
+            # print(pyxel.tilemap(0).get(4, 12))
+            # print(pyxel.tilemap(0).get(4, 13))
+            # print(pyxel.tilemap(0).get(4, 14))
+            # print(pyxel.tilemap(0).get(4, 15))
 
         if pyxel.btn(pyxel.KEY_D):
             dx = 1
@@ -67,15 +78,20 @@ class App:
                         del self.Items[i]
                         break
 
-        if pyxel.btn(pyxel.KEY_SPACE):
-            self.mplayer.jump(1)
-        elif self.mplayer.pos.y < 101: # it is initial height, player should be stop on block
-            if self.block.update_floor(self.mplayer.pos.x, self.mplayer.pos.y):
-                self.mplayer.down(1)
+        if pyxel.btnp(pyxel.KEY_SPACE):
+            self.mplayer.flag_jump_true()
+
+        if self.mplayer.flag_jump:
+            self.mplayer.jump(2)
+            self.count += 1
+            if self.count % 13 == 0:
+                self.count = 0
+                self.mplayer.down(2)
+        else:
+            if pyxel.tilemap(0).get(int(self.mplayer.pos.x/10), int((self.mplayer.pos.y+40)/10)) != GROUND_BLOCK:
+                self.mplayer.down(2)
             else:
                 self.mplayer.IMG = 16 #!101or101, TODO
-        elif self.mplayer.pos.y == 101:
-            self.mplayer.IMG = 16
 
         self.mplayer.update(dx)
 
@@ -84,7 +100,7 @@ class App:
 
         # draw background
         # pyxel.bltm(self.mplayer.pos.x, 0, 0, 0, 0, 30, 16,) # how to scroll
-        pyxel.bltm(0, 0, 0, 0, 0, 30, 16,)
+        pyxel.bltm(self.background.pos.x, self.background.pos.y, self.IMG_BACKGROUND, 0, 0, 30, 16,)
 
         # draw block
         pyxel.blt(self.block.pos.x, self.block.pos.y, self.IMG_BLOCK, 16, 16, BLOCK_W, BLOCK_H, )
