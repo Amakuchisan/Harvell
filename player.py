@@ -10,7 +10,7 @@ class Player():
         self.IMG_Y = 5
         self.PLAYER_W = 9
         self.PLAYER_H = 7 # big is 11
-        self.pos = Vec2(0, 105)
+        self.pos = Vec2(20, 105)
         self.img_player = img_id
         self.col = 9
         self.flag_jump = False

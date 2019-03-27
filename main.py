@@ -55,9 +55,12 @@ class App:
             print() # to debug
 
         if pyxel.btn(pyxel.KEY_D):
-            dx = 1
+            if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1:
+            # if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) not in self.FLOOR:
+                dx = 1
         if pyxel.btn(pyxel.KEY_A):
-            dx = -1
+            if pyxel.tilemap(0).get(int((self.mplayer.pos.x-1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1 and self.mplayer.pos.x >= 1:
+                dx = -1
 
         if pyxel.btn(pyxel.KEY_E):
             item_count = len(self.Items)
@@ -79,7 +82,7 @@ class App:
                 self.count = 0
                 self.mplayer.flag_jump_false()
         else:
-            if (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR:
+            if (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+7)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR:
                 if pyxel.btn(pyxel.KEY_G):
                     print(self.mplayer.flag_jump)
                     print(pyxel.tilemap(0).get(int((self.mplayer.pos.x+4)/10), int((self.mplayer.pos.y+39)/10)))
@@ -88,6 +91,9 @@ class App:
                 if pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+9)/8)) in self.FLOOR:
                     self.mplayer.normal()
                 self.mplayer.down(1)
+                if self.mplayer.pos.y > 130:
+                    self.mplayer.pos.x = 0
+                    self.mplayer.pos.y = 0
 
         self.mplayer.update(dx)
 
