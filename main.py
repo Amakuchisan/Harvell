@@ -1,5 +1,6 @@
 import pyxel
 import player
+import enemy
 import block
 import item
 
@@ -19,6 +20,7 @@ class App:
         self.IMG_PLAYER = 0
         self.IMG_BLOCK = 0
         self.IMG_ITEM = 0
+        self.IMG_ENEMY = 1
 
         self.time = 0
 
@@ -26,6 +28,7 @@ class App:
         pyxel.load("assets/my_resource.pyxel")
 
         self.mplayer = player.Player(self.IMG_PLAYER)
+        self.menemy = enemy.Enemy(self.IMG_ENEMY)
         self.block = block.Block(self.IMG_BLOCK)
         self.Items = []
         # add item
@@ -37,11 +40,10 @@ class App:
 
     def update(self):
         dx = 0
-        self.time += 1
-
         # item
         # self.Items = []
-        # if self.time%40 == 0:
+        if pyxel.frame_count%5 == 0:
+            self.menemy.update(self.menemy.pos.x)
         #     if len(self.Items)!=0:
         #         new_item = item.RED()
         #         new_item.update(36, 100, RED)
@@ -60,7 +62,8 @@ class App:
             if item_count:
                 for i in range(item_count):
                     if self.Items[i].get(self.mplayer.pos.x, self.mplayer.pos.y):
-                        pyxel.pal(9, self.Items[i].color())
+                        pyxel.pal(self.mplayer.color(), self.Items[i].color())
+                        self.mplayer.setcolor(self.Items[i].color())
                         del self.Items[i]
                         break
 
@@ -94,6 +97,9 @@ class App:
         # draw player
         # pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, 0, 0, PLAYER_W, PLAYER_H, 4) # big
         pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, self.mplayer.IMG, PLAYER_pos_y, self.mplayer.PLAYER_W, PLAYER_H, 4) # small
+
+        # draw enemy
+        pyxel.blt(self.menemy.pos.x, self.menemy.pos.y, self.IMG_ENEMY, self.menemy.IMG_X, self.menemy.IMG_Y, self.menemy.ENEMY_W, self.menemy.ENEMY_H, 4)
 
 
 if __name__ == "__main__":
