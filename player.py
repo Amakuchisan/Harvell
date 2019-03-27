@@ -6,9 +6,11 @@ class Vec2:
 
 class Player():
     def __init__(self, img_id):
-        self.IMG = 16
+        self.IMG_X = 16
+        self.IMG_Y = 5
         self.PLAYER_W = 9
-        self.pos = Vec2(0, 101)
+        self.PLAYER_H = 7 # big is 11
+        self.pos = Vec2(0, 105)
         self.img_player = img_id
         self.col = 9
         self.flag_jump = False
@@ -28,13 +30,24 @@ class Player():
         return self.col
 
     def flag_jump_true(self):
+        self.PLAYER_H = 11
+        self.IMG_Y = 5
         self.flag_jump = True
 
+    def flag_jump_false(self):
+        self.flag_jump = False
+
     def jump(self, y):
-        self.IMG = 26
+        self.IMG_X = 26
         self.pos.y -= y
 
     def down(self, y):
-        self.IMG = 35
+        self.IMG_X = 35
+        self.IMG_Y = 7
         self.pos.y += y
-        self.flag_jump = False
+        self.PLAYER_H = 13
+
+    def normal(self):
+        self.IMG_X = 16
+        self.IMG_Y = 5
+        self.PLAYER_H = 7

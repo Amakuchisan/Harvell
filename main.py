@@ -1,19 +1,17 @@
 import pyxel
 import player
 import enemy
-import block
 import item
 import background
 
 WINDOW_H = 120
 WINDOW_W = 160
-PLAYER_H = 11 # small is 7
-PLAYER_pos_y = 5
 # PLAYER_W = 9
 BLOCK_H = 8
 BLOCK_W = 16
 
 GROUND_BLOCK = 64
+BLOCK1 = 65
 
 #COLOR
 RED = 8
@@ -25,6 +23,7 @@ class App:
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
         self.IMG_BACKGROUND = 0
+        self.FLOOR = [GROUND_BLOCK, BLOCK1]
 
         self.count = 0
 
@@ -33,7 +32,6 @@ class App:
 
         self.mplayer = player.Player(self.IMG_PLAYER)
         self.menemy = enemy.Enemy(self.IMG_ENEMY)
-        self.block = block.Block(self.IMG_BLOCK)
         self.background = background.Background(self.IMG_BACKGROUND)
         self.Items = []
         # add item
@@ -54,14 +52,7 @@ class App:
                 self.Items.append(self.new_item)
 
         if pyxel.btnp(pyxel.KEY_Q):
-            print(int(self.mplayer.pos.x/10), int((self.mplayer.pos.y+40)/10))
-            # print(pyxel.image(0).get(self.mplayer.pos.x, self.mplayer.pos.y))
-            # print(pyxel.tilemap(0).get(4, 10))
-            # print(pyxel.tilemap(0).get(4, 11))
-            # print(pyxel.tilemap(0).get(4, 12))
-            # print(pyxel.tilemap(0).get(4, 13))
-            # print(pyxel.tilemap(0).get(4, 14))
-            # print(pyxel.tilemap(0).get(4, 15))
+            print() # to debug
 
         if pyxel.btn(pyxel.KEY_D):
             dx = 1
@@ -78,20 +69,25 @@ class App:
                         del self.Items[i]
                         break
 
-        if pyxel.btnp(pyxel.KEY_SPACE):
+        if pyxel.btnp(pyxel.KEY_SPACE): # TODO:着地前のジャンプ対応
             self.mplayer.flag_jump_true()
 
         if self.mplayer.flag_jump:
             self.mplayer.jump(2)
             self.count += 1
-            if self.count % 13 == 0:
+            if self.count % 15 == 0 or ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR or (self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR):
                 self.count = 0
-                self.mplayer.down(2)
+                self.mplayer.flag_jump_false()
         else:
-            if pyxel.tilemap(0).get(int(self.mplayer.pos.x/10), int((self.mplayer.pos.y+40)/10)) != GROUND_BLOCK:
-                self.mplayer.down(2)
+            if (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR:
+                if pyxel.btn(pyxel.KEY_G):
+                    print(self.mplayer.flag_jump)
+                    print(pyxel.tilemap(0).get(int((self.mplayer.pos.x+4)/10), int((self.mplayer.pos.y+39)/10)))
+                self.mplayer.normal()
             else:
-                self.mplayer.IMG = 16 #!101or101, TODO
+                if pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+9)/8)) in self.FLOOR:
+                    self.mplayer.normal()
+                self.mplayer.down(1)
 
         self.mplayer.update(dx)
 
@@ -102,17 +98,13 @@ class App:
         # pyxel.bltm(self.mplayer.pos.x, 0, 0, 0, 0, 30, 16,) # how to scroll
         pyxel.bltm(self.background.pos.x, self.background.pos.y, self.IMG_BACKGROUND, 0, 0, 30, 16,)
 
-        # draw block
-        pyxel.blt(self.block.pos.x, self.block.pos.y, self.IMG_BLOCK, 16, 16, BLOCK_W, BLOCK_H, )
-
         # draw item
         # pyxel.blt(self.item.pos.x, self.item.pos.y, self.IMG_ITEM, 16, 54, 8, 8, 11)
         for i in self.Items:
             pyxel.blt(i.pos.x, i.pos.y, self.IMG_ITEM, 16, 54, 8, 8, 11)
 
         # draw player
-        # pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, 0, 0, PLAYER_W, PLAYER_H, 4) # big
-        pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, self.mplayer.IMG, PLAYER_pos_y, self.mplayer.PLAYER_W, PLAYER_H, 4) # small
+        pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, self.mplayer.IMG_X, self.mplayer.IMG_Y, self.mplayer.PLAYER_W, self.mplayer.PLAYER_H, 4) # small
 
         # draw enemy
         pyxel.blt(self.menemy.pos.x, self.menemy.pos.y, self.IMG_ENEMY, self.menemy.IMG_X, self.menemy.IMG_Y, self.menemy.ENEMY_W, self.menemy.ENEMY_H, 4)
