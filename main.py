@@ -11,9 +11,9 @@ BLOCK_H = 8
 BLOCK_W = 16
 
 GROUND_BLOCK = 64
-BLOCK1 = 65
-BLOCKi = 97 # !
-BLOCKb = 98 # bridge
+BLOCK_N = 65
+BLOCK_I = 97 # !
+BLOCK_B = 98 # bridge
 
 #COLOR
 RED = 8
@@ -25,7 +25,7 @@ class App:
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
         self.IMG_BACKGROUND = 0
-        self.FLOOR = [GROUND_BLOCK, BLOCK1, BLOCKi, BLOCKb]
+        self.FLOOR = [GROUND_BLOCK, BLOCK_N, BLOCK_I, BLOCK_B]
 
         self.count = 0
 
@@ -58,10 +58,10 @@ class App:
             print(pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)))
 
         if pyxel.btn(pyxel.KEY_D):
-            if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1:
+            if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) != BLOCK_N:
                 dx = 1
         if pyxel.btn(pyxel.KEY_A):
-            if pyxel.tilemap(0).get(int((self.mplayer.pos.x-1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1 and self.mplayer.pos.x >= 1:
+            if pyxel.tilemap(0).get(int((self.mplayer.pos.x-1)/8), int((self.mplayer.pos.y)/8)) != BLOCK_N and self.mplayer.pos.x >= 1:
                 dx = -1
 
         if pyxel.btn(pyxel.KEY_E):
@@ -84,7 +84,7 @@ class App:
                 self.count = 0
                 self.mplayer.flag_jump_false()
                 # bridge
-                if ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y)/8)) == BLOCKi):
+                if ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y)/8)) == BLOCK_I):
                     pyxel.tilemap(0).set(8, 14, 98, 0)
                     pyxel.tilemap(0).set(9, 14, 98, 0)
                     pyxel.tilemap(0).set(10, 14, 98, 0)
