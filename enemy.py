@@ -10,7 +10,7 @@ class Enemy:
         self.ENEMY_W = 14
         self.ENEMY_H = 11
         self.col = 9
-        self.pos = Vec2(50, 101)
+        self.pos = Vec2(90, 101)
         self.img_enemy = img_id
 
     def update(self, x):

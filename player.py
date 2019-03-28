@@ -51,3 +51,11 @@ class Player():
         self.IMG_X = 16
         self.IMG_Y = 5
         self.PLAYER_H = 7
+
+    def encount(self, color):
+        if(color != self.col):
+            self.dead()
+
+    def dead(self):
+        self.pos.x = 0
+        self.pos.y = 0

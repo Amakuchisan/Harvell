@@ -12,6 +12,8 @@ BLOCK_W = 16
 
 GROUND_BLOCK = 64
 BLOCK1 = 65
+BLOCKi = 97 # !
+BLOCKb = 98 # bridge
 
 #COLOR
 RED = 8
@@ -23,7 +25,7 @@ class App:
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
         self.IMG_BACKGROUND = 0
-        self.FLOOR = [GROUND_BLOCK, BLOCK1]
+        self.FLOOR = [GROUND_BLOCK, BLOCK1, BLOCKi, BLOCKb]
 
         self.count = 0
 
@@ -52,11 +54,11 @@ class App:
                 self.Items.append(self.new_item)
 
         if pyxel.btnp(pyxel.KEY_Q):
-            print() # to debug
+            # to debug
+            print(pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)))
 
         if pyxel.btn(pyxel.KEY_D):
             if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1:
-            # if pyxel.tilemap(0).get(int((self.mplayer.pos.x+1)/8), int((self.mplayer.pos.y)/8)) not in self.FLOOR:
                 dx = 1
         if pyxel.btn(pyxel.KEY_A):
             if pyxel.tilemap(0).get(int((self.mplayer.pos.x-1)/8), int((self.mplayer.pos.y)/8)) != BLOCK1 and self.mplayer.pos.x >= 1:
@@ -81,6 +83,11 @@ class App:
             if self.count % 15 == 0 or ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR or (self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR):
                 self.count = 0
                 self.mplayer.flag_jump_false()
+                # bridge
+                if ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8)/8), int((self.mplayer.pos.y)/8)) == BLOCKi):
+                    pyxel.tilemap(0).set(8, 14, 98, 0)
+                    pyxel.tilemap(0).set(9, 14, 98, 0)
+                    pyxel.tilemap(0).set(10, 14, 98, 0)
         else:
             if (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+7)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR:
                 if pyxel.btn(pyxel.KEY_G):
@@ -92,8 +99,7 @@ class App:
                     self.mplayer.normal()
                 self.mplayer.down(1)
                 if self.mplayer.pos.y > 130:
-                    self.mplayer.pos.x = 0
-                    self.mplayer.pos.y = 0
+                    self.mplayer.dead()
 
         self.mplayer.update(dx)
 
