@@ -59,3 +59,4 @@ class Player():
     def dead(self):
         self.pos.x = 0
         self.pos.y = 0
+        pyxel.pal()

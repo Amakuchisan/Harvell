@@ -9,7 +9,7 @@ class Enemy:
         self.IMG_Y = 5
         self.ENEMY_W = 14
         self.ENEMY_H = 11
-        self.col = 9
+        self.col = 8
         self.pos = Vec2(90, 101)
         self.img_enemy = img_id
 
