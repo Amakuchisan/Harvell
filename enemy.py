@@ -15,6 +15,6 @@ class Enemy:
 
     def update(self, x):
         self.pos.x += 1
-    
+
     def color(self):
         return self.col
