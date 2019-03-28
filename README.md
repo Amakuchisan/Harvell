@@ -2,7 +2,7 @@
 
 ## 概要
 
-Pyxelを使った未完成の2D横スクロールゲームです。
+[Pyxel](https://github.com/kitao/pyxel)を使った未完成の2D横スクロールゲームです。
 
 ## 操作説明
 
