@@ -1,12 +1,15 @@
+import configparser
 import pyxel
 import player
 import enemy
 import item
 import background
 
+CONFIG_PATH = 'config/config.ini'
+
 WINDOW_H = 120
 WINDOW_W = 160
-# PLAYER_W = 9
+
 BLOCK_H = 8
 BLOCK_W = 16
 
@@ -20,7 +23,10 @@ RED = 8
 
 class App:
     def __init__(self):
-        self.IMG_PLAYER = 0
+        self.config = configparser.ConfigParser()
+        self.config.read(CONFIG_PATH)
+        self.config_player = self.config['PLAYER']
+
         self.IMG_BLOCK = 0
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
@@ -32,7 +38,7 @@ class App:
         pyxel.init(WINDOW_W, WINDOW_H, caption="Harvell")
         pyxel.load("assets/my_resource.pyxel")
 
-        self.mplayer = player.Player(self.IMG_PLAYER)
+        self.mplayer = player.Player(self.config_player)
         self.menemy = enemy.Enemy(self.IMG_ENEMY)
         self.background = background.Background(self.IMG_BACKGROUND)
         self.Items = []
@@ -118,7 +124,7 @@ class App:
             pyxel.blt(i.pos.x, i.pos.y, self.IMG_ITEM, 16, 54, 8, 8, 11)
 
         # draw player
-        pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.IMG_PLAYER, self.mplayer.IMG_X, self.mplayer.IMG_Y, self.mplayer.PLAYER_W, self.mplayer.PLAYER_H, 4) # small
+        pyxel.blt(self.mplayer.pos.x, self.mplayer.pos.y, self.mplayer.img_player, self.mplayer.IMG_X, self.mplayer.IMG_Y, self.mplayer.PLAYER_W, self.mplayer.PLAYER_H, 4) # small
 
         # draw enemy
         pyxel.blt(self.menemy.pos.x, self.menemy.pos.y, self.IMG_ENEMY, self.menemy.IMG_X, self.menemy.IMG_Y, self.menemy.ENEMY_W, self.menemy.ENEMY_H, 4)

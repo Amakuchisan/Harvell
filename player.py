@@ -1,14 +1,14 @@
 import pyxel
 from vec2 import Vec2
+
 class Player():
-    def __init__(self, img_id):
-        self.IMG_X = 16
-        self.IMG_Y = 5
-        self.PLAYER_W = 9
-        self.PLAYER_H = 7 # big is 11
-        self.pos = Vec2(20, 105)
-        self.img_player = img_id
-        self.col = 9
+    def __init__(self, config):
+        self.IMG_X, self.IMG_Y = int(config['IMG_X']), int(config['IMG_Y'])
+        self.PLAYER_W = int(config['default_player_witdth'])
+        self.PLAYER_H = int(config['default_player_heigh'])
+        self.pos = Vec2(int(config['default_player_pos_x']), int(config['default_player_pos_y']))
+        self.img_player = int(config['img_id'])
+        self.col = int(config['default_col'])
         self.flag_jump = False
 
     def update(self, x):
