@@ -15,10 +15,8 @@ class Item:
 
     def get(self, x, y):
         if (
-            x <= self.pos.x+8
-            and x >= self.pos.x-8
-            and y <= self.pos.y+8
-            and y >= self.pos.y-8
+            self.pos.x-8 <= x <= self.pos.x+8
+            and self.pos.y-8 <= y <= self.pos.y+8
         ):
             return True
 
