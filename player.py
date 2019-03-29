@@ -9,11 +9,11 @@ class Player():
         self.col = config.default_player_col
         self.flag_jump = False
 
-    def update(self, x):
-        self.pos.x += x
-        if x > 0:
+    def update(self, dx):
+        self.pos.x += dx
+        if dx > 0:
             self.PLAYER_W = 9
-        if x < 0:
+        if dx < 0:
             self.PLAYER_W = -9
 
     def color(self):

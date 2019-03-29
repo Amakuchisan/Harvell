@@ -5,7 +5,10 @@ class Item:
         self.img_item = img_id
         self.col = 0 # red
 
-    def update(self, x, y, color):
+    def update(self, dx):
+        self.pos.x += dx
+
+    def create(self, x, y, color):
         self.pos = Vec2(x, y)
         self.col = color
 
