@@ -1,4 +1,3 @@
-from vec2 import Vec2
 class Enemy:
     def __init__(self, config):
 
