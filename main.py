@@ -1,4 +1,5 @@
 import pyxel
+from config import Config
 import player
 import enemy
 import item
@@ -6,7 +7,6 @@ import background
 
 WINDOW_H = 120
 WINDOW_W = 160
-# PLAYER_W = 9
 BLOCK_H = 8
 BLOCK_W = 16
 
@@ -32,7 +32,7 @@ class App:
         pyxel.init(WINDOW_W, WINDOW_H, caption="Harvell")
         pyxel.load("assets/my_resource.pyxel")
 
-        self.mplayer = player.Player(self.IMG_PLAYER)
+        self.mplayer = player.Player(Config())
         self.menemy = enemy.Enemy(self.IMG_ENEMY)
         self.background = background.Background(self.IMG_BACKGROUND)
         self.Items = []
