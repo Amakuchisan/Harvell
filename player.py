@@ -1,12 +1,12 @@
 import pyxel
 class Player():
     def __init__(self, config):
-        self.IMG_X, self.IMG_Y = config.img_point
+        self.IMG_X, self.IMG_Y = config.img_player_point
         self.PLAYER_W = config.default_player_witdth
         self.PLAYER_H = config.default_player_heigh
         self.pos = config.default_player_pos
-        self.img_player = config.img_id
-        self.col = config.default_col
+        self.img_player = config.img_player_id
+        self.col = config.default_player_col
         self.flag_jump = False
 
     def update(self, x):

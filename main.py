@@ -33,7 +33,7 @@ class App:
         pyxel.load("assets/my_resource.pyxel")
 
         self.mplayer = player.Player(Config())
-        self.menemy = enemy.Enemy(self.IMG_ENEMY)
+        self.menemy = enemy.Enemy(Config())
         self.background = background.Background(self.IMG_BACKGROUND)
         self.Items = []
         # add item
