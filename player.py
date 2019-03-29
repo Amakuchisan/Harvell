@@ -1,9 +1,5 @@
 import pyxel
-class Vec2:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
+from vec2 import Vec2
 class Player():
     def __init__(self, img_id):
         self.IMG_X = 16
