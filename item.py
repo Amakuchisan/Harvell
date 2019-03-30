@@ -3,14 +3,13 @@ class Item:
     def __init__(self):
         img_id = 0
         self.img_item = img_id
-        self.col = 0 # red
+        self.col = 0
 
     def update(self, dx):
         self.pos.x += dx
 
-    def create(self, x, y, color):
+    def create(self, x, y):
         self.pos = Vec2(x, y)
-        self.col = color
 
     def get(self, x, y):
         if (
@@ -25,4 +24,4 @@ class Item:
 class Red(Item):
     def __init__(self):
         super().__init__()
-        self.item = 8 # red
+        self.col = 8 # red
