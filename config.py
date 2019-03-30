@@ -1,5 +1,5 @@
 from vec2 import Vec2
-class Config():
+class Config:
     # Player
     img_player_point = 16, 5
     default_player_witdth = 9
