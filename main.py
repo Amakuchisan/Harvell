@@ -24,8 +24,8 @@ class App:
         self.IMG_BLOCK = 0
         self.IMG_ITEM = 0
         self.IMG_ENEMY = 1
-        self.IMG_BACKGROUND = 0
         self.FLOOR = [GROUND_BLOCK, BLOCK_N, BLOCK_I, BLOCK_B]
+        self.config = Config()
 
         self.count = 0
         self.count_background = 0
@@ -33,9 +33,9 @@ class App:
         pyxel.init(WINDOW_W, WINDOW_H, caption="Harvell")
         pyxel.load("assets/my_resource.pyxel")
 
-        self.mplayer = player.Player(Config())
-        self.menemy = enemy.Enemy(Config())
-        self.background = background.Background(self.IMG_BACKGROUND)
+        self.mplayer = player.Player(self.config)
+        self.menemy = enemy.Enemy(self.config)
+        self.background = background.Background(self.config)
         self.Items = []
         # add item
         self.new_item = item.Red()
@@ -119,8 +119,8 @@ class App:
         pyxel.cls(0)
 
         # draw background
-        # pyxel.bltm(self.mplayer.pos.x, 0, 0, 0, 0, 30, 16,) # how to scroll
-        pyxel.bltm(self.background.pos.x, self.background.pos.y, self.IMG_BACKGROUND, 0, 0, 30, 16,)
+        # pyxel.bltm(self.mplayer.pos.x, 0, 0, 0, 0, 30, 16,)
+        pyxel.bltm(self.background.pos.x, self.background.pos.y, self.background.img_background, 0, 0, 30, 16,)
 
         # draw item
         # pyxel.blt(self.item.pos.x, self.item.pos.y, self.IMG_ITEM, 16, 54, 8, 8, 11)

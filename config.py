@@ -15,3 +15,7 @@ class Config():
     default_enemy_pos = Vec2(90, 101)
     img_enemy_id = 0
     default_enemy_col = 8
+
+    # Background
+    default_background_pos = Vec2(0, 0)
+    img_background_id = 0
