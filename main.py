@@ -98,7 +98,7 @@ class App:
                         del self.Items[i]
                         break
 
-        if pyxel.btnp(pyxel.KEY_SPACE): # TODO:着地前のジャンプ対応
+        if self.mplayer.flag_landing == False and pyxel.btnp(pyxel.KEY_SPACE): # TODO:着地前のジャンプ対応
             self.mplayer.flag_jump_true()
 
         if self.mplayer.flag_jump:
