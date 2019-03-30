@@ -88,17 +88,26 @@ class App:
         if self.mplayer.flag_jump:
             self.mplayer.jump(2)
             self.count += 1
-            if self.count % 15 == 0 or ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+self.count_background)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR or (self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8+self.count_background)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR):
+            if (
+                self.count % 15 == 0 or ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+self.count_background)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR
+                or (self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+8+self.count_background)/8), int((self.mplayer.pos.y)/8)) in self.FLOOR)
+            ):
                 self.count = 0
                 self.mplayer.flag_jump_false()
                 # とりあえず[!]を叩くと橋がかかるようなギミックを
-                if ((self.mplayer.pos.y+1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+4+self.count_background)/8), int((self.mplayer.pos.y)/8)) == BLOCK_I):
+                if (
+                    (self.mplayer.pos.y+1)%8 == 0
+                    and pyxel.tilemap(0).get(int((self.mplayer.pos.x+4+self.count_background)/8), int((self.mplayer.pos.y)/8)) == BLOCK_I
+                ):
                     pyxel.tilemap(0).set(8, 14, 98, 0)
                     pyxel.tilemap(0).set(9, 14, 98, 0)
                     pyxel.tilemap(0).set(10, 14, 98, 0)
         else:
             # ブロックに当たった時の処理を良い感じにしたいが……
-            if (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+self.count_background)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+7+self.count_background)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR:
+            if (
+                (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+self.count_background)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR
+                or (self.mplayer.pos.y-1)%8 == 0 and pyxel.tilemap(0).get(int((self.mplayer.pos.x+7+self.count_background)/8), int((self.mplayer.pos.y+7)/8)) in self.FLOOR
+            ):
                 self.mplayer.normal()
             else:
                 if pyxel.tilemap(0).get(int((self.mplayer.pos.x+self.count_background)/8), int((self.mplayer.pos.y+9)/8)) in self.FLOOR:
@@ -108,7 +117,10 @@ class App:
                 if self.mplayer.pos.y > 130:
                     self.mplayer.dead()
 
-        if ((self.mplayer.pos.x+7 >= self.menemy.pos.x ) and (self.mplayer.pos.x <= self.menemy.pos.x+7)) and (self.mplayer.pos.y >= self.menemy.pos.y):
+        if (
+            ((self.mplayer.pos.x+7 >= self.menemy.pos.x ) and (self.mplayer.pos.x <= self.menemy.pos.x+7))
+            and (self.mplayer.pos.y >= self.menemy.pos.y)
+        ):
             self.mplayer.encount(self.menemy.color())
 
         self.mplayer.update(dx)
