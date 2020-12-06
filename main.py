@@ -82,7 +82,7 @@ class App:
             # elif pyxel.tilemap(0).get(int((self.mplayer.pos.x-1+self.count_background)/8), int((self.mplayer.pos.y)/8)) != BLOCK_N and self.mplayer.pos.x >= 1:
                 dx = -1
 
-        if pyxel.frame_count%10 == 0: # Enemyが動くように
+        if pyxel.frame_count%20 == 0: # Enemyが動くように
             self.menemy.update(1-dx_background)
             self.count_enemy += 1
             self.menemy.update(dx_background)
